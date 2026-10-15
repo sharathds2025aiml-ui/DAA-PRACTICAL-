@@ -1,0 +1,250 @@
+Q. Convert the following algorithm into a program and find its time complexity using the counter method.
+
+void function (int n)
+{
+    int i= 1;
+    int s =1;
+    while(s <= n)
+    {
+         i++;
+         s += i;
+     }      
+}
+
+Note: No need of counter increment for declarations and scanf() and  count variable printf() statements.
+
+Input:
+A positive Integer n
+Output:
+Print the value of the counter variable
+
+CODE:
+
+#include <stdio.h>
+
+void function(int n)
+{
+    int i = 1;
+    int s = 1;
+    int count = 0;
+
+    count++;
+    count++;
+
+    while (++count && s <= n)
+    {
+        i++;     count++;
+        s += i;  count++;
+    }
+
+    printf("%d", count);
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    function(n);
+    return 0;
+}
+Q. Convert the following algorithm into a program and find its time complexity using the counter method.
+
+void func(int n)
+{
+    if(n==1)
+    {
+      printf("*");
+    }
+    else
+    {
+     for(int i=1; i<=n; i++)
+     {
+       for(int j=1; j<=n; j++)
+       {
+          printf("*");
+          printf("*");
+          break;
+       }
+     }
+   }                      
+ }
+
+Note: No need of counter increment for declarations and scanf() and  count variable printf() statements.
+
+Input:
+A positive Integer n
+Output:
+Print the value of the counter variable
+
+CODE:
+
+#include <stdio.h>
+
+void func(int n)
+{
+    int count = 0;
+
+    if (n == 1)
+    {
+        count++;
+        printf(" ");
+    }
+    else
+    {
+        for (int i = 1; count++ && i <= n; i++)
+        {
+            for (int j = 1; count++ && j <= n; j++)
+            {
+                count++;
+                count++;
+                break;
+            }
+        }
+        count=5*n+2;
+    }
+
+    printf("%d", count);
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    func(n);
+    return 0;
+}
+Q. Convert the following algorithm into a program and find its time complexity using counter method.
+
+ Factor(num) {
+ {
+    for (i = 1; i <= num;++i)
+    {
+     if (num % i== 0)
+        {
+          printf("%d ", i);
+        }        
+     } 
+  }
+ 
+ 
+Note: No need of counter increment for declarations and scanf() and counter variable printf() statement.
+
+Input:
+A positive Integer n
+Output:
+Print the value of the counter variable
+
+CODE:
+
+#include <stdio.h>
+
+int main() {
+    long long n, counter = 0;
+
+    scanf("%lld", &n);
+
+    counter++;
+
+    for (long long i = 1; i <= n; ++i) {
+        counter++;
+        counter++;
+
+        if (n % i == 0) {
+            counter++;
+        }
+    }
+
+    printf("%lld", counter);
+    return 0;
+}
+Q. Convert the following algorithm into a program and find its time complexity using counter method.
+
+void function(int n)
+{
+    int c= 0;
+    for(int i=n/2; i<n; i++)
+        for(int j=1; j<n; j = 2 * j)
+            for(int k=1; k<n; k = k * 2)
+                c++;
+}
+ 
+Note: No need of counter increment for declarations and scanf() and  count variable printf() statements.
+
+Input:
+A positive Integer n
+Output:
+Print the value of the counter variable
+
+CODE:
+
+#include <stdio.h>
+
+int main() {
+    int n;
+    long long c = 1;
+
+    scanf("%d", &n);
+
+    for (int i = n / 2; (c++, i < n); i++) {
+        for (int j = 1; (c++, j < n); j = 2 * j) {
+            for (int k = 1; (c++, k < n); k = 2 * k) {
+                c++;
+            }
+        }
+    }
+
+    printf("%lld", c);
+    return 0;
+}
+Q. Convert the following algorithm into a program and find its time complexity using counter method.
+
+void reverse(int n)
+{
+   int rev = 0, remainder;
+   while (n != 0) 
+    {
+        remainder = n % 10;
+        rev = rev * 10 + remainder;
+        n/= 10;
+        
+    }
+print(rev);
+}
+ 
+Note: No need of counter increment for declarations and scanf() and  count variable printf() statements.
+
+Input:
+ A positive Integer n
+Output:
+Print the value of the counter variable
+
+CODE:
+
+#include <stdio.h>
+
+int reverse(int n) {
+    int rev = 0, remainder;
+    int count = 2;
+
+    while (count++, n != 0) {
+        count++;
+        remainder = n % 10;
+
+        count++;
+        rev = rev * 10 + remainder;
+
+        count++;
+        n /= 10;
+    }
+
+    return count;
+}
+
+int main() {
+    int n;
+
+    scanf("%d", &n);
+    printf("%d", reverse(n));
+
+    return 0;
+}
