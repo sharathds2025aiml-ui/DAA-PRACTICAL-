@@ -1,0 +1,296 @@
+Q. Given an array of 1s and 0s this has all 1s first followed by all 0s. Aim is to find the number of 0s. Write a program using Divide and Conquer to Count the number of zeroes in the given array.
+Input Format:
+   First Line Contains Integer m – Size of array
+   Next m lines Contains m numbers – Elements of an array
+
+Output Format:
+   First Line Contains Integer – Number of zeroes present in the given array.
+
+CODE:
+
+#include <stdio.h>
+int firstZero(int a[],int low,int high){
+    if(low>high)
+        return -1;
+    int mid=(low+high)/2;
+    if(a[mid]==0 && (mid==0 || a[mid-1]==1))
+        return mid;
+    if(a[mid]==1)
+        return firstZero(a,mid+1,high);
+    return firstZero(a,low,mid-1);
+}
+int main(){
+    int m;
+    scanf("%d",&m);
+    int a[m];
+    for(int i=0;i<m;i++)
+        scanf("%d",&a[i]);
+    int index=firstZero(a,0,m-1);
+    if(index==-1)
+        printf("0\n");
+    else
+        printf("%d\n",m-index);
+    return 0;
+}
+Q. Given an array nums of size n, return the majority element.
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+ Example 1:
+Input: nums = [3,2,3]
+Output: 3
+
+Example 2:
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
+ 
+Constraints:
+n == nums.length
+1 <= n <= 5 * 104
+-231 <= nums[i] <= 231 - 1
+
+For example:
+
+Input         	Result
+3                 3
+3 2 3
+
+7
+2 2 1 1 1 2 2     2
+
+CODE:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int majorityElement(int* nums, int numsSize) {
+    int count = 0;
+    int candidate = 0;
+    
+    for (int i = 0; i < numsSize; i++) {
+        if (count == 0) {
+            candidate = nums[i];
+        }
+        if (nums[i] == candidate) {
+            count++;
+        } else {
+            count--;
+        }
+    }
+    return candidate;
+}
+
+int main() {
+    int n;
+    
+    if (scanf("%d", &n) == 1) {
+        int* nums = (int*)malloc(n * sizeof(int));
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &nums[i]);
+        }
+        
+        int result = majorityElement(nums, n);
+        printf("%d\n", result);
+        
+        free(nums);
+    }
+    
+    return 0;
+}
+Q. Given a sorted array and a value x, the floor of x is the largest element in array smaller than or equal to x. Write divide and conquer algorithm to find floor of x.
+
+Input Format:
+   First Line Contains Integer n – Size of array
+   Next n lines Contains n numbers – Elements of an array
+   Last Line Contains Integer x – Value for x
+ 
+Output Format:
+   First Line Contains Integer – Floor value for x
+
+CODE:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int findFloor(int* arr, int n, int x) {
+    int low = 0, high = n - 1;
+    int floor = -1;
+    
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if (arr[mid] == x) {
+            return arr[mid];
+        } else if (arr[mid] < x) {
+            floor = arr[mid];
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    
+    return floor;
+}
+
+int main() {
+    int n;
+    if (scanf("%d", &n) == 1) {
+        int* arr = (int*)malloc(n * sizeof(int));
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        
+        int x;
+        scanf("%d", &x);
+        
+        int result = findFloor(arr, n, x);
+        printf("%d\n", result);
+        
+        free(arr);
+    }
+    
+    return 0;
+}
+Q. Given a sorted array of integers say arr[] and a number x. Write a recursive program using divide and conquer strategy to check if there exist two elements in the array whose sum = x. If there exist such two elements then return the numbers, otherwise print as “No”.
+
+Note: Write a Divide and Conquer Solution
+Input Format:
+   First Line Contains Integer n – Size of array
+   Next n lines Contains n numbers – Elements of an array
+   Last Line Contains Integer x – Sum Value
+
+Output Format:
+   First Line Contains Integer – Element1
+   Second Line Contains Integer – Element2 (Element 1 and Elements 2 together sums to value “x”)
+
+CODE:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int binarySearchRange(int* arr, int low, int high, int target) {
+    if (low > high) return -1;
+    int mid = low + (high - low) / 2;
+    if (arr[mid] == target) return mid;
+    if (arr[mid] > target) return binarySearchRange(arr, low, mid - 1, target);
+    return binarySearchRange(arr, mid + 1, high, target);
+}
+
+int findPairDC(int* arr, int low, int high, int x, int* e1, int* e2) {
+    if (low >= high) return 0;
+    
+    int mid = low + (high - low) / 2;
+    
+    if (findPairDC(arr, low, mid, x, e1, e2)) return 1;
+    
+    if (findPairDC(arr, mid + 1, high, x, e1, e2)) return 1;
+    
+    for (int i = low; i <= mid; i++) {
+        int target = x - arr[i];
+        int idx = binarySearchRange(arr, mid + 1, high, target);
+        if (idx != -1) {
+            *e1 = arr[i];
+            *e2 = arr[idx];
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
+int main() {
+    int n;
+    if (scanf("%d", &n) != 1) return 0;
+    
+    int* arr = (int*)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    int x;
+    scanf("%d", &x);
+    
+    int e1, e2;
+    if (findPairDC(arr, 0, n - 1, x, &e1, &e2)) {
+        printf("%d\n%d\n", e1, e2);
+    } else {
+        printf("No\n");
+    }
+    
+    free(arr);
+    return 0;
+}
+Q. Write a Program to Implement the Quick Sort Algorithm
+
+Input Format:
+The first line contains the no of elements in the list-n
+The next n lines contain the elements.
+
+Output:
+Sorted list of elements
+
+For example:
+
+Input              	Result
+5
+67 34 12 98 78
+                 12 34 67 78 98
+
+CODE:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int n;
+    if (scanf("%d", &n) == 1) {
+        int* arr = (int*)malloc(n * sizeof(int));
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &arr[i]);
+        }
+        
+        quickSort(arr, 0, n - 1);
+        
+        for (int i = 0; i < n; i++) {
+            printf("%d", arr[i]);
+            if (i < n - 1) {
+                printf(" ");
+            }
+        }
+        printf("\n");
+        
+        free(arr);
+    }
+    
+    return 0;
+}
